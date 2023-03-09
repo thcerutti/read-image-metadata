@@ -1,5 +1,5 @@
-const { getInputParams, validateInputParams } = require("./inputParams");
-const { processFileMetadata } = require("./processFileMetadata");
+const { getInputParams, validateInputParams } = require("./src/inputParams");
+const { processFileMetadata } = require("./src/processFileMetadata");
 
 const inputParams = getInputParams();
 const errors = validateInputParams(inputParams);
