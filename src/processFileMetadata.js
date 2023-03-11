@@ -16,8 +16,10 @@ const processFileMetadata = (inputParams) => {
       prompt: info.data[inputParams.prop]
     }))
     console.info(`[${extractedInfo.length} files processed]`)
-    console.log(JSON.stringify(extractedInfo, null, 2));
-    writeFileSync(inputParams.output, JSON.stringify(extractedInfo, null, 2))
+    console.log(extractedInfo.map(item => item.prompt).join("\n\r"));
+    // writeFileSync(inputParams.output, JSON.stringify(extractedInfo, null, 2))
+    writeFileSync(inputParams.output, extractedInfo.map(item => item.prompt).join("\n\r"))
+
     console.info(`[results have been written to '${inputParams.output}' file]`)
   })
 
