@@ -1,5 +1,5 @@
 var exifr = require("exifr");
-const { readdirSync, writeFileSync } = require("fs");
+const { readdirSync } = require("fs");
 
 const processFileMetadata = async (inputParams) => {
   const files = readdirSync(inputParams.path);

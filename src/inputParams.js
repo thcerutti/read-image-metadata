@@ -1,12 +1,12 @@
 const { existsSync } = require("fs");
 
 const getInputParams = () => {
-  const myObj = {};
+  const inputParams = {};
   process.argv.splice(2).map((arg) => {
-    const [a, b] = arg.substring(2).split(":");
-    myObj[a] = b;
+    const [key, value] = arg.substring(2).split(":");
+    inputParams[key] = value;
   });
-  return myObj;
+  return inputParams;
 };
 
 const validateInputParams = (input) => {
