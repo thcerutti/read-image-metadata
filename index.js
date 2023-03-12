@@ -1,6 +1,6 @@
 const { getInputParams, validateInputParams } = require("./src/inputParams");
 const { processFileMetadata } = require("./src/processFileMetadata");
-const { writeFileSync } = require("fs");
+const { writeFileSync, appendFileSync } = require("fs");
 
 const inputParams = getInputParams();
 const errors = validateInputParams(inputParams);
@@ -11,21 +11,27 @@ if (errors.length > 0) {
 
 const logFileName = "output.log";
 
-try {
-  processFileMetadata(inputParams).then((metadataContent) => {
-    console.log(metadataContent);
-    console.info(`[${metadataContent.length} files processed]`);
-
+processFileMetadata(inputParams)
+  .then((metadataContent) => {
     const formattedContent = metadataContent
       .map((item) => item.data.parameters.split("\n")[0])
-      .join("\n\r");
-    writeFileSync(inputParams.output, formattedContent);
-    console.info(`[results have been written to '${inputParams.output}' file]`);
+      .join("\n");
+    try {
+      writeFileSync(inputParams.output, formattedContent);
+      console.log(metadataContent);
+      console.info(`[${metadataContent.length} files processed]`);
+      console.info(
+        `[results have been written to '${inputParams.output}' file]`
+      );
+    } catch (error) {
+      appendFileSync(`./${logFileName}`, JSON.stringify(error).concat("\n\r"));
+      console.error(`ERROR: could not write to path ${inputParams.output}`);
+    }
+  })
+  .catch((error) => {
+    console.log("🚀 ~ file: index.js:26 ~ error:", error);
+    appendFileSync(`./${logFileName}`, JSON.stringify(error));
+    console.error(
+      `Houston, we have a problem! Logs were saved to ./${logFileName}}`
+    );
   });
-  throw "eeepaaaaa";
-} catch (error) {
-  writeFileSync(`./${logFileName}`, error);
-  console.error(
-    `Houston, we have a problem! Logs were saved to ./${logFileName}}`
-  );
-}
