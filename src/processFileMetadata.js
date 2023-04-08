@@ -1,8 +1,11 @@
 var exifr = require("exifr");
 const { readdirSync } = require("fs");
+const path = require("path");
 
 const processFileMetadata = async (inputParams) => {
-  const files = readdirSync(inputParams.path);
+  const files = readdirSync(inputParams.path).filter(
+    (file) => path.extname(file).toLowerCase() === ".png"
+  );
 
   const readFilePromises = files.map(async (fileName) => ({
     fileName: `${inputParams.path}/${fileName}`,
