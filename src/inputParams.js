@@ -3,7 +3,10 @@ const { existsSync } = require("fs");
 const getInputParams = () => {
   const inputParams = {};
   process.argv.splice(2).map((arg) => {
-    const [key, value] = arg.substring(2).split(":");
+    console.log(arg);
+    const colonPosition = arg.indexOf(":");
+    const key = arg.substring(0, colonPosition);
+    const value = arg.substring(colonPosition + 1);
     inputParams[key] = value;
   });
   return inputParams;
