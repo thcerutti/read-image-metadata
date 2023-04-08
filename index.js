@@ -14,7 +14,7 @@ const logFileName = "output.log";
 processFileMetadata(inputParams)
   .then((metadataContent) => {
     const formattedContent = metadataContent
-      .map((item) => item.data.parameters.split("\n")[0])
+      .map((item) => item.data.parameters?.split("\n")[0])
       .join("\n");
     try {
       writeFileSync(inputParams.output, formattedContent);
