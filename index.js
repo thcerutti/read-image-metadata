@@ -18,7 +18,6 @@ processFileMetadata(inputParams)
       .join("\n");
     try {
       writeFileSync(inputParams.output, formattedContent);
-      console.log(metadataContent);
       console.info(`[${metadataContent.length} files processed]`);
       console.info(
         `[results have been written to '${inputParams.output}' file]`
@@ -29,7 +28,6 @@ processFileMetadata(inputParams)
     }
   })
   .catch((error) => {
-    console.log("🚀 ~ file: index.js:26 ~ error:", error);
     appendFileSync(`./${logFileName}`, JSON.stringify(error));
     console.error(
       `Houston, we have a problem! Logs were saved to ./${logFileName}}`
